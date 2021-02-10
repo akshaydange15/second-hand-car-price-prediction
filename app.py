@@ -6,18 +6,22 @@ import numpy as np
 import sklearn
 from sklearn.preprocessing import StandardScaler
 
-app.car = Flask(__name__)
-# import file and model 
+app = Flask(__name__)
+
+# import file and model in pickle form 
+''' pickle is basically provide you an ability to get data(test and train) in a series form and 
+ready model so on basis of data you enter model run and give you output'''
+
+# read pickle model 
 model = pickle.load(open('car_predict_model.pkl', 'rb'))
 
-#getting file from home
+# run a basic templet so user can enter value {HOME PAGE}
 @app.route('/',methods=['GET'])
 def Home():
     return render_template('index.html')
-
 standard_to = StandardScaler()
 
-#predict output
+#predict output based on data you enter
 @app.route("/predict", methods=['POST'])
 def predict():
     Fuel_Type_Diesel=0
@@ -56,7 +60,9 @@ def predict():
         #now prediction started
         # the data you enter should go with feature so it will be better for model to fill value
         prediction=model.predict([[Present_Price,Kms_Driven,Owner,Year,Fuel_Type_Diesel,Fuel_Type_Petrol,Seller_Type_Individual,Transmission_Mannual]])
+        #round helps you to give output upto 2 decimal places
         output=round(prediction[0],2)
+
         if output<0:
             return render_template('index.html',prediction_texts="Sorry you cannot sell this car")
         else:
