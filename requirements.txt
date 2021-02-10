@@ -1,5 +1,5 @@
 Flask==1.1.2
-gunicorn==1.1.2
+gunicorn
 jsonify==0.5
 jupyter==1.0.0
 matplotlib==3.3.3
