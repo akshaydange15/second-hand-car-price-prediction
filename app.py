@@ -6,7 +6,7 @@ import numpy as np
 import sklearn
 from sklearn.preprocessing import StandardScaler
 
-app = Flask(__name__)
+app.car = Flask(__name__)
 # import file and model 
 model = pickle.load(open('car_predict_model.pkl', 'rb'))
 
@@ -54,6 +54,7 @@ def predict():
             Transmission_Mannual=0
             
         #now prediction started
+        # the data you enter should go with feature so it will be better for model to fill value
         prediction=model.predict([[Present_Price,Kms_Driven,Owner,Year,Fuel_Type_Diesel,Fuel_Type_Petrol,Seller_Type_Individual,Transmission_Mannual]])
         output=round(prediction[0],2)
         if output<0:
